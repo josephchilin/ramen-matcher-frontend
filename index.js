@@ -5,18 +5,25 @@ const userUrl = 'http://localhost:3000/api/v1/users'
 const scoreUrl = 'http://localhost:3000/api/v1/scores'
 
 const cardBack = 'https://i.imgur.com/fi8sccM.png'
+const correctPair = 'https://i.imgur.com/qoRKqo9.png'
+const wrongPair = 'https://i.imgur.com/xobKCZ8.png'
+
 const formInput = document.querySelector("#userForm > p:nth-child(2) > input[type=text]")
 const statusBox = document.getElementById("statusBox")
 const userForm = document.getElementById("userForm")
+
 const ramenCard = document.getElementsByClassName("ramen-card")
+const statusCard = document.getElementById("status")
 const ramenCell = document.getElementsByClassName("ramen-cell")
 const guessNode = document.getElementById("guessBox")
 
 let gamePairs = 0
-let currentChoice = ""
-let guessesNumber
+let currentPairs = 0
+let savedChoice = "" //save previous card name
+let savedNode //save previous card node
+let guessesNumber = 0
 
-console.log(guessNode)
+console.log(correctPair)
 // √ need url constants for ramen/user/score
 // √ need constant for card back image
 
@@ -33,6 +40,20 @@ const card8 = ramenCard[7]
 
 function renderCard(card){
     card.src = cardBack
+}
+
+function correct(){
+    statusCard.src = correctPair
+    gamePairs + 1
+}
+
+function wrong(){
+    statusCard.src = wrongPair
+}
+
+function guessIncrement(){
+    guessesNumber = parseInt(guessNode.innerHTML) + 1
+    guessNode.innerHTML = `${guessesNumber} Guesses`
 }
 
 let ramenOne = {
@@ -159,49 +180,70 @@ document.addEventListener('submit', function(e){
 
 })
 
+function flipCards(savedNode, e){
+    setTimeout(function(){
+        e.target.src = cardBack
+        savedNode.src = cardBack
+    }, 1000)
+
+}
+// need function if currentpairs === game pairs then game over
+function gameOver(){
+
+    if (currentPairs === gamePairs){
+        console.log('game over')
+        statusBox.innerHTML = `Congratulations, you solved this with ${guessesNumber} guesses!`
+    }
+}
+
+
+
 document.addEventListener('click', function(e){
 //correct pair
-    if(e.target.dataset.ramen === currentChoice) {
+console.log(currentPairs)
+    if(e.target.src === cardBack && e.target.dataset.ramen === savedChoice ) {
         e.target.src = e.target.dataset.ramenurl
-        console.log('click')
-        console.log(currentChoice)
+        console.log('pair match click')
         //increment guessesNumber by 1
-        //clear current choice
-        //refactor guesses into function later
-        guessesNumber = parseInt(guessNode.innerHTML) + 1
-        guessNode.innerHTML = `${guessesNumber} Guesses`
-//wrong pair
-// need conditional logic to flip second choice in wrong pair
-  } else if (e.target.dataset.ramen != currentChoice){
+        savedChoice = "" //clear saved choice
+        savedNode = "" //clear saved node
 
-    console.log('this is the wrong pair')
+        currentPairs += 1
 
-// flip chosen ramen
+        guessIncrement()
 
-//flip both cards to cardback after x seconds
-// increment guesses by 1
-// clear current choice
+        correct() //correct middle card
 
-
-
+        gameOver()
 //first flip
+    } else if(e.target.src === cardBack && savedChoice === ""){
+        e.target.src = e.target.dataset.ramenurl //flip
+        savedChoice = e.target.dataset.ramen //save current ramen name
+        savedNode = e.target //save current node
+        statusCard.src = "" // clear statuscard
+
+        console.log ('first card pair click')
+        // console.log (e.target)
+
+//wrong pair
     } else if(e.target.src === cardBack){
         e.target.src = e.target.dataset.ramenurl //flip
-        currentChoice = e.target.dataset.ramen
-        // console.log (currentChoice)
-        //nest another else if
+        
+        console.log('wrong pair click')
 
-    }
+        flipCards(savedNode, e)             // flip both cards back TK x seconds
 
+        guessIncrement() // increment guesses by 1
 
-    // if(e.target.dataset.ramen)
-    // console.log(e.target.dataset.ramen)
+        // clear current choice
+        savedChoice = ""
+        savedNode = ""
 
+        wrong() // wrong match card function
 
-
+        }
 
 })
-
 
 
 // √ need name submit form 
@@ -238,22 +280,22 @@ document.addEventListener('click', function(e){
 
 // gameplay
 
-// need current click variable (let currentChoice = 0)
-// need pair counter to keep track of how many pairs have been matched (let ramenPair = 0)
-//         need clickeventlistener for document 
+//√ need current click variable (let savedChoice = 0)
+//√ need pair counter to keep track of how many pairs have been matched (let ramenPair = 0)
+//√        need clickeventlistener for document 
 
-//         //wrong choice
-//             if click ramen-id doesn't equal currentChoice 
+//   √      //wrong choice
+//             if click ramen-id doesn't equal savedChoice 
 //             change target src to ramen-id src //flip image
-//             reset currentChoice 
+//             reset savedChoice 
 //             say 'Wrong, try again'
 //             some timer to show wrong images for 1 second 
 //                 need timer function? 
 //             image src = cardback after 1 second
 //             increment guess by 1
 
-//         //right choice
-//             else click src  === ramen-id = currentChoice 
+// √        //right choice
+//             else click src  === ramen-id = savedChoice 
 //                 src === ramen-id src //flips image over
 //                                     // Match! text popup
 //                                     images stay flipped over
@@ -261,11 +303,11 @@ document.addEventListener('click', function(e){
 //                                     increment guess by 1
 //         //initial click
 //         √    else click src === cardback src, then src === ramen-id src 
-//         √    currentChoice = e.target ramen-id? 
+//         √    savedChoice = e.target ramen-id? 
 
     // game over logic
-        // if ramenPair = gameMode 
-        //     Congratulations, you solved this with ${guessesNumber}!
+        //√ if ramenPair = gameMode 
+        // √    Congratulations, you solved this with ${guessesNumber}!
         //     show score list?
         //     new game button?
 
