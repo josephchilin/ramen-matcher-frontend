@@ -22,8 +22,10 @@ let currentPairs = 0
 let savedChoice = "" //save previous card name
 let savedNode //save previous card node
 let guessesNumber = 0
+let userName = "" //saved form name
+let currentUserId
 
-console.log(correctPair)
+// console.log(correctPair)
 // √ need url constants for ramen/user/score
 // √ need constant for card back image
 
@@ -75,7 +77,6 @@ let ramenFour = {
   }
 
 const ramenArray = [ramenOne, ramenOne, ramenTwo, ramenTwo, ramenThree, ramenThree, ramenFour, ramenFour]
-
 
 // fisher-yates shuffle algorithm
 function shuffle(array) {
@@ -138,7 +139,6 @@ function generateBoard(){
     card8.dataset.ramenurl = ramenShuffledArray[7].imageUrl
 
     gamePairs = 4
-
 }
 
 
@@ -154,24 +154,8 @@ document.addEventListener('submit', function(e){
     e.preventDefault()
 
     userName = formInput.value
-    
-    console.log(userName)
-//fetch post start
-    fetch(userUrl, {
-        method: "POST",
-        headers: {
-            "content-type": "application/json",
-            "accept": "application/json"
-        },
-        body: JSON.stringify({
-                name: userName
-            })
 
-    })
-//fetch post end
-    // .then(response => response.json())
-    // .then(console.log)
-
+    guessNode.innerHTML = "0 Guesses"
     statusBox.innerHTML = `Hi ${userName}, try to find all the pairs of ramen in the fewest guesses.`
 
     userForm.remove()
@@ -187,23 +171,47 @@ function flipCards(savedNode, e){
     }, 1000)
 
 }
+
+function saveUser(){
+    console.log(`save user function with ${guessesNumber} guesses`)
+    fetch(userUrl, {
+        method: "POST",
+        headers: {
+            "content-type": "application/json",
+            "accept": "application/json"
+        },
+        body: JSON.stringify({
+                name: userName,
+                guesses: guessesNumber
+            })
+
+    })
+        .then(response => response.json())
+        .then(console.log)
+
+
+    // fetch post to scores
+    // .then get all scores
+    // populate to ul
+}
+
 // need function if currentpairs === game pairs then game over
 function gameOver(){
 
     if (currentPairs === gamePairs){
-        console.log('game over')
-        statusBox.innerHTML = `Congratulations, you solved this with ${guessesNumber} guesses!`
+        console.log(`game over function with ${guessesNumber} guesses`)
+        statusBox.innerHTML = `Congratulations ${userName}, you solved this with ${guessesNumber} guesses!`
+        saveUser()
+        //need function to show score list
     }
 }
-
-
 
 document.addEventListener('click', function(e){
 //correct pair
 console.log(currentPairs)
     if(e.target.src === cardBack && e.target.dataset.ramen === savedChoice ) {
         e.target.src = e.target.dataset.ramenurl
-        console.log('pair match click')
+        // console.log('pair match click')
         //increment guessesNumber by 1
         savedChoice = "" //clear saved choice
         savedNode = "" //clear saved node
@@ -222,16 +230,15 @@ console.log(currentPairs)
         savedNode = e.target //save current node
         statusCard.src = "" // clear statuscard
 
-        console.log ('first card pair click')
-        // console.log (e.target)
+        // console.log ('first card pair click')
 
 //wrong pair
     } else if(e.target.src === cardBack){
         e.target.src = e.target.dataset.ramenurl //flip
         
-        console.log('wrong pair click')
+        // console.log('wrong pair click')
 
-        flipCards(savedNode, e)             // flip both cards back TK x seconds
+        flipCards(savedNode, e)     // flip both cards back TK x seconds
 
         guessIncrement() // increment guesses by 1
 

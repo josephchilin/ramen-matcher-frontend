@@ -6,18 +6,27 @@
 <link rel="stylesheet" href="index.css">
 <style>
     h1 {text-align: center;}
+    h3 {text-align: center;}
+    
 </style>
 </head>
 
 <body>
-<h1 id=gameName>Ramen Matcher</h1>
-<h3 id="guessBox">0 GUESSES</h3> <h3 id="statusBox">Welcome!</h3>
 
-<form id="userForm">
-    <p><label>Enter Your Name</label></p>
-    <p><input type="text" name="name"></p>
-    <input type="submit" value="Submit">
-</form>
+        <h1 id=gameName>Ramen Matcher</h1>
+        <h3 id="guessBox"></h3>
+        <h3 id="statusBox">Welcome!</h3>
+<div class="name-form">
+        <form id="userForm">
+            <p><label>Enter Your Name</label></p>
+            <p><input type="text" name="name"></p>
+            <input type="submit" value="Submit">
+        </form>
+</div>
+        <ul id="scoreList">
+
+        </ul>
+
 
 <div class="gameSpace">
     <table class="gameTable">
