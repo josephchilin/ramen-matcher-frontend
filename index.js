@@ -10,8 +10,13 @@ const statusBox = document.getElementById("statusBox")
 const userForm = document.getElementById("userForm")
 const ramenCard = document.getElementsByClassName("ramen-card")
 const ramenCell = document.getElementsByClassName("ramen-cell")
+const guessNode = document.getElementById("guessBox")
 
 let gamePairs = 0
+let currentChoice = ""
+let guessesNumber
+
+console.log(guessNode)
 // √ need url constants for ramen/user/score
 // √ need constant for card back image
 
@@ -29,8 +34,6 @@ const card8 = ramenCard[7]
 function renderCard(card){
     card.src = cardBack
 }
-
-
 
 let ramenOne = {
     "name": "ichiran",
@@ -72,10 +75,6 @@ function shuffle(array) {
   
     return array;
   }
-
-
-
-
 
 function generateBoard(){
 
@@ -161,10 +160,46 @@ document.addEventListener('submit', function(e){
 })
 
 document.addEventListener('click', function(e){
-    console.log ('click')
+//correct pair
+    if(e.target.dataset.ramen === currentChoice) {
+        e.target.src = e.target.dataset.ramenurl
+        console.log('click')
+        console.log(currentChoice)
+        //increment guessesNumber by 1
+        //clear current choice
+        //refactor guesses into function later
+        guessesNumber = parseInt(guessNode.innerHTML) + 1
+        guessNode.innerHTML = `${guessesNumber} Guesses`
+//wrong pair
+// need conditional logic to flip second choice in wrong pair
+  } else if (e.target.dataset.ramen != currentChoice){
+
+    console.log('this is the wrong pair')
+
+// flip chosen ramen
+
+//flip both cards to cardback after x seconds
+// increment guesses by 1
+// clear current choice
+
+
+
+//first flip
+    } else if(e.target.src === cardBack){
+        e.target.src = e.target.dataset.ramenurl //flip
+        currentChoice = e.target.dataset.ramen
+        // console.log (currentChoice)
+        //nest another else if
+
+    }
+
+
     // if(e.target.dataset.ramen)
     // console.log(e.target.dataset.ramen)
-    e.target.src = e.target.dataset.ramenurl
+
+
+
+
 })
 
 
@@ -197,9 +232,9 @@ document.addEventListener('click', function(e){
 //guess incrementer
         //- need guess incrementer function
             // - increments after every pair of clicks
-        // set guesses incrementer to 0
-        // something parsint?
-        // save increment to variable
+        //√ set guesses incrementer to 0
+        //√ something parsint?
+        //√ save increment to variable
 
 // gameplay
 
@@ -225,8 +260,8 @@ document.addEventListener('click', function(e){
                                         // increment ramenPair by 1
 //                                     increment guess by 1
 //         //initial click
-//             else click src === cardback src, then src === ramen-id src 
-//             currentChoice = e.target ramen-id? 
+//         √    else click src === cardback src, then src === ramen-id src 
+//         √    currentChoice = e.target ramen-id? 
 
     // game over logic
         // if ramenPair = gameMode 
