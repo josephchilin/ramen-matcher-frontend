@@ -10,6 +10,8 @@ const statusBox = document.getElementById("statusBox")
 const userForm = document.getElementById("userForm")
 const ramenCard = document.getElementsByClassName("ramen-card")
 const ramenCell = document.getElementsByClassName("ramen-cell")
+
+let gamePairs = 0
 // √ need url constants for ramen/user/score
 // √ need constant for card back image
 
@@ -72,37 +74,50 @@ function shuffle(array) {
   }
 
 
-let ramenShuffledArray = ramenArray
 
 
-shuffle(ramenShuffledArray)
-console.log(ramenShuffledArray[0])
 
 function generateBoard(){
+
+    let ramenShuffledArray = ramenArray
+
+    shuffle(ramenShuffledArray)
+    
     card1.src = cardBack
     card1.dataset.ramen = ramenShuffledArray[0].name
+    card1.dataset.ramenurl = ramenShuffledArray[0].imageUrl
 
     card2.src = cardBack
     card2.dataset.ramen = ramenShuffledArray[1].name
-    
+    card2.dataset.ramenurl = ramenShuffledArray[1].imageUrl
+
     card3.src = cardBack
     card3.dataset.ramen = ramenShuffledArray[2].name
-    
+    card3.dataset.ramenurl = ramenShuffledArray[2].imageUrl
+
     card4.src = cardBack
     card4.dataset.ramen = ramenShuffledArray[3].name
+    card4.dataset.ramenurl = ramenShuffledArray[3].imageUrl
 
     card5.src = cardBack
     card5.dataset.ramen = ramenShuffledArray[4].name
-    
+    card5.dataset.ramenurl = ramenShuffledArray[4].imageUrl
+
     card6.src = cardBack
     card6.dataset.ramen = ramenShuffledArray[5].name
+    card6.dataset.ramenurl = ramenShuffledArray[5].imageUrl
 
     card7.src = cardBack
     card7.dataset.ramen = ramenShuffledArray[6].name
+    card7.dataset.ramenurl = ramenShuffledArray[6].imageUrl
 
     card8.src = cardBack
     card8.dataset.ramen = ramenShuffledArray[7].name
+    card8.dataset.ramenurl = ramenShuffledArray[7].imageUrl
 
+    gamePairs = 4
+
+    console.log(ramenShuffledArray[0])
 }
 
 
@@ -144,6 +159,12 @@ document.addEventListener('submit', function(e){
 
 })
 
+document.addEventListener('click', function(e){
+    console.log ('click')
+    // if(e.target.dataset.ramen)
+    // console.log(e.target.dataset.ramen)
+    e.target.src = e.target.dataset.ramenurl
+})
 
 
 
@@ -164,12 +185,12 @@ document.addEventListener('submit', function(e){
         // √<tr><th>     use tables to format? or flexbox? 
         // √load 8 cells with src = card back constant 
         // √load middle cell with empty image or empty cell?
-        // set each cell with ramen-id 
+        // √ set each cell with ramen-name
         // fetch get 4 ramen 
+        // set first 4 ramen fetch to variables
         // √    need to create an array with ramen choices (need 2 of each, total of 8)
         // √    need to shuffle array
-        //     need function to grab from array and set cell with that choice 
-        //         need to subtract that choice from array 
+        // √    need function to grab from array and set cell with that choice 
         // set gameMode to 4 (for 4 pairs) for normal mode
         
 //guess incrementer
