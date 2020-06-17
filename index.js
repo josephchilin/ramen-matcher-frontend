@@ -4,7 +4,7 @@ const noodleUrl = 'http://localhost:3000/api/v1/noodles'
 const userUrl = 'http://localhost:3000/api/v1/users'
 const scoreUrl = 'http://localhost:3000/api/v1/scores'
 
-const cardBack = 'https://i.imgur.com/eUtXyTs.jpg'
+const cardBack = 'https://i.imgur.com/fi8sccM.png'
 const formInput = document.querySelector("#userForm > p:nth-child(2) > input[type=text]")
 const statusBox = document.getElementById("statusBox")
 const userForm = document.getElementById("userForm")
@@ -34,20 +34,20 @@ function renderCard(card){
 
 let ramenOne = {
     "name": "ichiran",
-    "imageUrl": "https://i.imgur.com/xWTTbBx.jpg"
+    "imageUrl": "https://i.imgur.com/qEk4ZMF.png"
   }
 let ramenTwo = {
     "name": "momosan",
-    "imageUrl": "https://i.imgur.com/VCbUDIA.jpg"
+    "imageUrl": "https://i.imgur.com/hLkrgOR.png"
   }
 let ramenThree = {
     "name": "nakiryu",
-    "imageUrl": "https://i.imgur.com/Ii1vbsK.jpg"
+    "imageUrl": "https://i.imgur.com/ExKxm2t.png"
   }
 
 let ramenFour = {
     "name": "tsuta",
-    "imageUrl": "https://i.imgur.com/UwPJR2C.jpg"
+    "imageUrl": "https://i.imgur.com/azMJhCA.png"
   }
 
 const ramenArray = [ramenOne, ramenOne, ramenTwo, ramenTwo, ramenThree, ramenThree, ramenFour, ramenFour]
@@ -82,7 +82,9 @@ function generateBoard(){
     let ramenShuffledArray = ramenArray
 
     shuffle(ramenShuffledArray)
-    
+
+// need to refactor into loop
+
     card1.src = cardBack
     card1.dataset.ramen = ramenShuffledArray[0].name
     card1.dataset.ramenurl = ramenShuffledArray[0].imageUrl
@@ -117,7 +119,6 @@ function generateBoard(){
 
     gamePairs = 4
 
-    console.log(ramenShuffledArray[0])
 }
 
 
@@ -168,7 +169,7 @@ document.addEventListener('click', function(e){
 
 
 
-//- need name submit form 
+// √ need name submit form 
     // √ submit field 
     // √ submit button 
     // √ need clickeventlistener for submit button 
@@ -179,7 +180,7 @@ document.addEventListener('click', function(e){
     // √ hide form after fetch post 
 
 // after submit form click
-    // generate game container 
+    //√ generate game container 
         // √create generate game function 
         //  √   creates game container div 
         // √<tr><th>     use tables to format? or flexbox? 
@@ -191,7 +192,7 @@ document.addEventListener('click', function(e){
         // √    need to create an array with ramen choices (need 2 of each, total of 8)
         // √    need to shuffle array
         // √    need function to grab from array and set cell with that choice 
-        // set gameMode to 4 (for 4 pairs) for normal mode
+        // √ set gameMode to 4 (for 4 pairs) for normal mode
         
 //guess incrementer
         //- need guess incrementer function
