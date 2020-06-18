@@ -69,26 +69,26 @@ function setRamen(){
 }
 
 function setBeef(){
-    let ramenOne = {
+    let beefOne = {
         "name": "bel-campo",
         "imageUrl": "https://i.imgur.com/qpaz4TR.png"
     }
-    let ramenTwo = {
+    let beefTwo = {
         "name": "au-cheval",
         "imageUrl": "https://i.imgur.com/zbMtbng.png"
     }
-    let ramenThree = {
+    let beefThree = {
         "name": "french-louie",
         "imageUrl": "https://i.imgur.com/wVuQgaB.png"
     }
-    let ramenFour = {
+    let beefFour = {
         "name": "coopers-nyc",
         "imageUrl": "https://i.imgur.com/L5wyP5v.png"
     }
 
-    let ramenArray = [ramenOne, ramenOne, ramenTwo, ramenTwo, ramenThree, ramenThree, ramenFour, ramenFour]
+    let beefArray = [beefOne, beefOne, beefTwo, beefTwo, beefThree, beefThree, beefFour, beefFour]
 
-    generateBoard(ramenArray)
+    generateBoard(beefArray)
 }
 
 // FISHER-YATES SHUFFLE ALGORITHM
@@ -115,36 +115,36 @@ function generateBoard(array){
     shuffle(array)
 // need to refactor into loop
     card1.src = cardBack
-    card1.dataset.ramen = array[0].name
-    card1.dataset.ramenurl = array[0].imageUrl
+    card1.dataset.name = array[0].name
+    card1.dataset.url = array[0].imageUrl
 
     card2.src = cardBack
-    card2.dataset.ramen = array[1].name
-    card2.dataset.ramenurl = array[1].imageUrl
+    card2.dataset.name = array[1].name
+    card2.dataset.url = array[1].imageUrl
 
     card3.src = cardBack
-    card3.dataset.ramen = array[2].name
-    card3.dataset.ramenurl = array[2].imageUrl
+    card3.dataset.name = array[2].name
+    card3.dataset.url = array[2].imageUrl
 
     card4.src = cardBack
-    card4.dataset.ramen = array[3].name
-    card4.dataset.ramenurl = array[3].imageUrl
+    card4.dataset.name = array[3].name
+    card4.dataset.url = array[3].imageUrl
 
     card5.src = cardBack
-    card5.dataset.ramen = array[4].name
-    card5.dataset.ramenurl = array[4].imageUrl
+    card5.dataset.name = array[4].name
+    card5.dataset.url = array[4].imageUrl
 
     card6.src = cardBack
-    card6.dataset.ramen = array[5].name
-    card6.dataset.ramenurl = array[5].imageUrl
+    card6.dataset.name = array[5].name
+    card6.dataset.url = array[5].imageUrl
 
     card7.src = cardBack
-    card7.dataset.ramen = array[6].name
-    card7.dataset.ramenurl = array[6].imageUrl
+    card7.dataset.name = array[6].name
+    card7.dataset.url = array[6].imageUrl
 
     card8.src = cardBack
-    card8.dataset.ramen = array[7].name
-    card8.dataset.ramenurl = array[7].imageUrl
+    card8.dataset.name = array[7].name
+    card8.dataset.url = array[7].imageUrl
 
     gamePairs = 4
 }
@@ -256,8 +256,8 @@ document.addEventListener('submit', function(e){
 document.addEventListener('click', function(e){
 //CORRECT PAIR
 // console.log(currentPairs)
-    if(e.target.src === cardBack && e.target.dataset.ramen === savedChoice ) {
-        e.target.src = e.target.dataset.ramenurl //flip
+    if(e.target.src === cardBack && e.target.dataset.name === savedChoice ) {
+        e.target.src = e.target.dataset.url //flip
         // console.log('pair match click')
         savedChoice = "" //clear saved choice
         savedNode = "" //clear saved node
@@ -271,14 +271,14 @@ document.addEventListener('click', function(e){
 //FIRST CARD FLIP
     } else if(e.target.src === cardBack && savedChoice === ""){
         // console.log ('first card pair click')
-        e.target.src = e.target.dataset.ramenurl //flip
-        savedChoice = e.target.dataset.ramen //save current ramen name
+        e.target.src = e.target.dataset.url //flip
+        savedChoice = e.target.dataset.name //save current ramen name
         savedNode = e.target //save current node
         statusCard.src = "" // clear statuscard
 
 //WRONG PAIR
     } else if(e.target.src === cardBack){
-        e.target.src = e.target.dataset.ramenurl //flip
+        e.target.src = e.target.dataset.url //flip
         // console.log('wrong pair click')
 
         flipCards(savedNode, e) // flip both cards back in 1 second
