@@ -45,6 +45,19 @@ let userName = "" //saved form name
 let currentUserId
 
 // need to refactor into get fetch
+
+// let ramenOne
+// let ramenTwo
+// let ramenThree
+// let ramenFour 
+
+
+// let ramenArray = [ramenOne, ramenOne, ramenTwo, ramenTwo, ramenThree, ramenThree, ramenFour, ramenFour]
+
+function setRamen(){
+
+//  console.log(ramenArray)
+
 let ramenOne = {
     "name": "ichiran",
     "imageUrl": "https://i.imgur.com/WJD7d6E.png"
@@ -64,7 +77,33 @@ let ramenFour = {
 
 let ramenArray = [ramenOne, ramenOne, ramenTwo, ramenTwo, ramenThree, ramenThree, ramenFour, ramenFour]
 
-let ramenShuffledArray = ramenArray
+  generateBoard(ramenArray)
+
+}
+
+function setBeef(){
+    ramenOne = {
+        "name": "bel-campo",
+        "imageUrl": "https://i.imgur.com/qpaz4TR.png"
+      }
+    ramenTwo = {
+        "name": "au-cheval",
+        "imageUrl": "https://i.imgur.com/zbMtbng.png"
+      }
+    ramenThree = {
+        "name": "french-louie",
+        "imageUrl": "https://i.imgur.com/wVuQgaB.png"
+      }
+    ramenFour = {
+        "name": "coopers-nyc",
+        "imageUrl": "https://i.imgur.com/L5wyP5v.png"
+      }
+
+      let ramenArray = [ramenOne, ramenOne, ramenTwo, ramenTwo, ramenThree, ramenThree, ramenFour, ramenFour]
+
+  generateBoard(ramenArray)
+}
+
 // HELPER FUNCTIONS
 function correct(){
     statusCard.src = correctPair
@@ -100,9 +139,8 @@ function shuffle(array) {
     return array;
   }
 
-function generateBoard(){
-    let ramenShuffledArray = ramenArray
-
+function generateBoard(ramenShuffledArray){
+// console.log(ramenShuffledArray)
     shuffle(ramenShuffledArray)
 
 // need to refactor into loop
@@ -141,25 +179,7 @@ function generateBoard(){
     gamePairs = 4
 }
 
-function setBeef(){
-    ramenOne = {
-        "name": "bel-campo",
-        "imageUrl": "https://i.imgur.com/qpaz4TR.png"
-      }
-    ramenTwo = {
-        "name": "au-cheval",
-        "imageUrl": "https://i.imgur.com/zbMtbng.png"
-      }
-    ramenThree = {
-        "name": "french-louie",
-        "imageUrl": "https://i.imgur.com/wVuQgaB.png"
-      }
-    ramenFour = {
-        "name": "coopers-nyc",
-        "imageUrl": "https://i.imgur.com/L5wyP5v.png"
-      }
 
-}
 
 function flipCards(savedNode, e){
     setTimeout(function(){
@@ -202,7 +222,7 @@ function renderUser(userObject){
 }
 
 function renderUsers(users){
-    ramenScoresNode.innerHTML = 'Ramen Scores'
+    ramenScoresNode.innerHTML = 'Scoreboard'
     users.forEach(function(userObject){
         renderUser(userObject)
     })
@@ -236,7 +256,7 @@ document.addEventListener('submit', function(e){
 
         setBeef()
         // console.log(ramenOne)
-        generateBoard()
+        // generateBoard()
 
     }
 
@@ -247,7 +267,8 @@ document.addEventListener('submit', function(e){
     statusBox.innerHTML = `Hi ${userName}, try to find all the pairs of ramen in the fewest moves.`
     userForm.remove()
 
-    generateBoard()
+    setRamen()
+    // generateBoard()
     }
 })
 
