@@ -43,6 +43,7 @@ let savedNode //save previous card node
 let guessesNumber = 0
 let userName = "" //saved form name
 let currentUserId
+let gameMode = ""
 
 // SET BOARD FUNCTIONS
 function setRamen(){
@@ -160,8 +161,14 @@ function wrong(){
 }
 
 function guessIncrement(){
+    if (gameMode === "burgers" ){
+        guessesNumber = parseInt(guessNode.innerHTML) + 1
+        guessNode.innerHTML = `${guessesNumber} Moooves`
+
+    } else if (gameMode === "ramen"){
     guessesNumber = parseInt(guessNode.innerHTML) + 1
     guessNode.innerHTML = `${guessesNumber} Moves`
+    }
 }
 
 function flipCards(savedNode, e){
@@ -174,7 +181,7 @@ function flipCards(savedNode, e){
 
 function gameOver(){
     if (currentPairs === gamePairs){
-        statusBox.innerHTML = `Congratulations ${userName}, you matched all the pairs in ${guessesNumber} moves!`
+        statusBox.innerHTML = `Congratulations ${userName}, you matched all the pairs of ${gameMode}!`
         saveUser()
         getUsers()
     }
@@ -235,9 +242,10 @@ document.addEventListener('submit', function(e){
         userName = formInput.value
 
         gameName.innerHTML = 'THERE IS NO COW LEVEL'
-        guessNode.innerHTML = "0 Moves"
+        guessNode.innerHTML = "0 Moooves"
         statusBox.innerHTML = `Hi ${userName}, try to find all the pairs of burgers in the fewest moooves.`
         userForm.remove()
+        gameMode = "burgers"
 
         setBeef()
     }
@@ -248,6 +256,7 @@ document.addEventListener('submit', function(e){
         guessNode.innerHTML = "0 Moves"
         statusBox.innerHTML = `Hi ${userName}, try to find all the pairs of ramen in the fewest moves.`
         userForm.remove()
+        gameMode = "ramen"
 
         setRamen()
     }
