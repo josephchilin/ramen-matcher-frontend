@@ -181,8 +181,7 @@ function saveUser(){
                 guesses: guessesNumber
         })
     })
-
-    getUsers()
+    // .then(getUsers())
     
 }
 
@@ -221,6 +220,7 @@ function gameOver(){
     if (currentPairs === gamePairs){
         statusBox.innerHTML = `Congratulations ${userName}, you matched all the ramen in ${guessesNumber} moves!`
         saveUser()
+        getUsers()
     }
 }
 

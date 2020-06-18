@@ -31,6 +31,9 @@
     /* overflow: scroll; */
 }
 
+ul{
+    padding-left: 20px;
+}
 .score-text{
     /* margin-top: 0px; */
     margin-bottom: 0px;
