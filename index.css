@@ -30,3 +30,8 @@
     font-family: 'Josefin Sans', sans-serif;
     /* overflow: scroll; */
 }
+
+.score-text{
+    /* margin-top: 0px; */
+    margin-bottom: 0px;
+}

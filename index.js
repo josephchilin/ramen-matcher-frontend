@@ -12,6 +12,7 @@ const wrongPair = 'https://i.imgur.com/7X0qBn4.png'
 const formInput = document.querySelector("#userForm > p:nth-child(2) > input[type=text]")
 const statusBox = document.getElementById("statusBox")
 const userForm = document.getElementById("userForm")
+const submitNode = document.querySelector("#userForm > input[type=submit]")
 
 // CARD NODES
 const ramenCard = document.getElementsByClassName("ramen-card")
@@ -32,6 +33,7 @@ const card8 = ramenCard[7]
 // SCORE NODE
 const scoreNode = document.getElementById("scoreList")
 const ramenScoresNode = document.getElementById("ramen-scores")
+const gameName = document.getElementById("gameName")
 
 // VARIABLES FOR SAVING STATE
 let gamePairs = 0
@@ -41,21 +43,6 @@ let savedNode //save previous card node
 let guessesNumber = 0
 let userName = "" //saved form name
 let currentUserId
-
-// CARD PAIR STATUS FUNCTIONS
-function correct(){
-    statusCard.src = correctPair
-    gamePairs + 1
-}
-
-function wrong(){
-    statusCard.src = wrongPair
-}
-// HELPER FUNCTIONS
-function guessIncrement(){
-    guessesNumber = parseInt(guessNode.innerHTML) + 1
-    guessNode.innerHTML = `${guessesNumber} Moves`
-}
 
 // need to refactor into get fetch
 let ramenOne = {
@@ -75,7 +62,23 @@ let ramenFour = {
     "imageUrl": "https://i.imgur.com/xujYqVP.png"
   }
 
-const ramenArray = [ramenOne, ramenOne, ramenTwo, ramenTwo, ramenThree, ramenThree, ramenFour, ramenFour]
+let ramenArray = [ramenOne, ramenOne, ramenTwo, ramenTwo, ramenThree, ramenThree, ramenFour, ramenFour]
+
+let ramenShuffledArray = ramenArray
+// HELPER FUNCTIONS
+function correct(){
+    statusCard.src = correctPair
+    gamePairs + 1
+}
+
+function wrong(){
+    statusCard.src = wrongPair
+}
+
+function guessIncrement(){
+    guessesNumber = parseInt(guessNode.innerHTML) + 1
+    guessNode.innerHTML = `${guessesNumber} Moves`
+}
 
 // fisher-yates shuffle algorithm
 function shuffle(array) {
@@ -98,13 +101,11 @@ function shuffle(array) {
   }
 
 function generateBoard(){
-
     let ramenShuffledArray = ramenArray
 
     shuffle(ramenShuffledArray)
 
 // need to refactor into loop
-
     card1.src = cardBack
     card1.dataset.ramen = ramenShuffledArray[0].name
     card1.dataset.ramenurl = ramenShuffledArray[0].imageUrl
@@ -140,31 +141,25 @@ function generateBoard(){
     gamePairs = 4
 }
 
-// function renderCard(card){
-//     card.src = cardBack
-// }
+function setBeef(){
+    ramenOne = {
+        "name": "bel-campo",
+        "imageUrl": "https://i.imgur.com/qpaz4TR.png"
+      }
+    ramenTwo = {
+        "name": "au-cheval",
+        "imageUrl": "https://i.imgur.com/zbMtbng.png"
+      }
+    ramenThree = {
+        "name": "french-louie",
+        "imageUrl": "https://i.imgur.com/wVuQgaB.png"
+      }
+    ramenFour = {
+        "name": "coopers-nyc",
+        "imageUrl": "https://i.imgur.com/L5wyP5v.png"
+      }
 
-// ramenCard.foreach(renderCard(card))
-
-// function renderCards(cards){
-//     cards.forEach(function(card){
-//         renderCard(card)
-//     })
-// }
-
-document.addEventListener('submit', function(e){
-    e.preventDefault()
-
-    userName = formInput.value
-
-    guessNode.innerHTML = "0 Moves"
-    statusBox.innerHTML = `Hi ${userName}, try to find all the pairs of ramen in the fewest moves.`
-
-    userForm.remove()
-
-    generateBoard()
-
-})
+}
 
 function flipCards(savedNode, e){
     setTimeout(function(){
@@ -222,59 +217,78 @@ function getUsers(){
     })
 }
 
-// need function if currentpairs === game pairs then game over
 function gameOver(){
     if (currentPairs === gamePairs){
         statusBox.innerHTML = `Congratulations ${userName}, you matched all the ramen in ${guessesNumber} moves!`
         saveUser()
-
-        //need function to show score list
     }
 }
+
+document.addEventListener('submit', function(e){
+    e.preventDefault()
+
+    if(formInput.value==='beef'){
+        gameName.innerHTML = 'THERE IS NO COW LEVEL'
+        userName = formInput.value
+        guessNode.innerHTML = "0 Moves"
+        statusBox.innerHTML = `Hi ${userName}, try to find all the pairs of burgers in the fewest moves.`
+        userForm.remove()
+
+        setBeef()
+        // console.log(ramenOne)
+        generateBoard()
+
+    }
+
+    else if(formInput.value){
+    userName = formInput.value
+
+    guessNode.innerHTML = "0 Moves"
+    statusBox.innerHTML = `Hi ${userName}, try to find all the pairs of ramen in the fewest moves.`
+    userForm.remove()
+
+    generateBoard()
+    }
+})
 
 document.addEventListener('click', function(e){
 //CORRECT PAIR
 // console.log(currentPairs)
     if(e.target.src === cardBack && e.target.dataset.ramen === savedChoice ) {
-        e.target.src = e.target.dataset.ramenurl
+        e.target.src = e.target.dataset.ramenurl //flip
         // console.log('pair match click')
-        //increment guessesNumber by 1
         savedChoice = "" //clear saved choice
         savedNode = "" //clear saved node
+        currentPairs += 1 //complete pair counter
 
-        currentPairs += 1
-
-        guessIncrement()
+        guessIncrement() //increment moves +1
 
         correct() //correct middle card
 
-        gameOver()
+        gameOver() //end game conditional
 //FIRST CARD FLIP
     } else if(e.target.src === cardBack && savedChoice === ""){
+        // console.log ('first card pair click')
         e.target.src = e.target.dataset.ramenurl //flip
         savedChoice = e.target.dataset.ramen //save current ramen name
         savedNode = e.target //save current node
         statusCard.src = "" // clear statuscard
-
-        // console.log ('first card pair click')
 
 //WRONG PAIR
     } else if(e.target.src === cardBack){
         e.target.src = e.target.dataset.ramenurl //flip
         // console.log('wrong pair click')
 
-        flipCards(savedNode, e) // flip both cards back TK x seconds
+        flipCards(savedNode, e) // flip both cards back in 1 second
 
-        guessIncrement() // increment guesses by 1
+        savedChoice = "" //clear saved choice
+        savedNode = "" //clear saved node
 
-        // clear current choice
-        savedChoice = ""
-        savedNode = ""
+        guessIncrement() // increment moves +1
 
         wrong() // wrong match card function
         }
 })
-
 
 // √ need name submit form 
     // √ submit field 
