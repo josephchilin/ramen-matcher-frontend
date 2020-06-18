@@ -29,6 +29,10 @@ const card6 = ramenCard[5]
 const card7 = ramenCard[6]
 const card8 = ramenCard[7]
 
+// SCORE NODE
+const scoreNode = document.getElementById("scoreList")
+const ramenScoresNode = document.getElementById("ramen-scores")
+
 // VARIABLES FOR SAVING STATE
 let gamePairs = 0
 let currentPairs = 0
@@ -37,8 +41,6 @@ let savedNode //save previous card node
 let guessesNumber = 0
 let userName = "" //saved form name
 let currentUserId
-
-
 
 // CARD PAIR STATUS FUNCTIONS
 function correct(){
@@ -49,13 +51,13 @@ function correct(){
 function wrong(){
     statusCard.src = wrongPair
 }
-
+// HELPER FUNCTIONS
 function guessIncrement(){
     guessesNumber = parseInt(guessNode.innerHTML) + 1
-    guessNode.innerHTML = `${guessesNumber} Guesses`
+    guessNode.innerHTML = `${guessesNumber} Moves`
 }
 
-// need to refactor into fetch
+// need to refactor into get fetch
 let ramenOne = {
     "name": "ichiran",
     "imageUrl": "https://i.imgur.com/qEk4ZMF.png"
@@ -155,8 +157,8 @@ document.addEventListener('submit', function(e){
 
     userName = formInput.value
 
-    guessNode.innerHTML = "0 Guesses"
-    statusBox.innerHTML = `Hi ${userName}, try to find all the pairs of ramen in the fewest guesses.`
+    guessNode.innerHTML = "0 Moves"
+    statusBox.innerHTML = `Hi ${userName}, try to find all the pairs of ramen in the fewest moves.`
 
     userForm.remove()
 
@@ -182,28 +184,57 @@ function saveUser(){
         body: JSON.stringify({
                 name: userName,
                 guesses: guessesNumber
-            })
+        })
     })
-        .then(response => response.json())
-        .then(console.log)
 
-    // fetch post to scores
-    // .then get all scores
-    // populate to ul
+    getUsers()
+    
+}
+
+function createUserLi(userObject){
+    const userLi = document.createElement('li')
+    userLi.className = 'user-score'
+    userLi.dataset.id = userObject.id
+
+    userLi.innerHTML = `
+    <h4>${userObject.guesses} moves........${userObject.name}</h4>
+    `
+    return userLi
+}
+
+function renderUser(userObject){
+    const userLi = createUserLi(userObject)
+    scoreNode.append(userLi)
+}
+
+function renderUsers(users){
+    ramenScoresNode.innerHTML = 'Ramen Scores'
+    users.forEach(function(userObject){
+        renderUser(userObject)
+    })
+}
+
+function getUsers(){
+    fetch(userUrl)
+    .then(response => response.json())
+    .then(users => {
+        renderUsers(users)
+    })
 }
 
 // need function if currentpairs === game pairs then game over
 function gameOver(){
     if (currentPairs === gamePairs){
-        statusBox.innerHTML = `Congratulations ${userName}, you solved this with ${guessesNumber} guesses!`
+        statusBox.innerHTML = `Congratulations ${userName}, you matched all the ramen in ${guessesNumber} moves!`
         saveUser()
+
         //need function to show score list
     }
 }
 
 document.addEventListener('click', function(e){
 //CORRECT PAIR
-console.log(currentPairs)
+// console.log(currentPairs)
     if(e.target.src === cardBack && e.target.dataset.ramen === savedChoice ) {
         e.target.src = e.target.dataset.ramenurl
         // console.log('pair match click')

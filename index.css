@@ -19,3 +19,13 @@
 .status-card {
     width: 90%;
 }
+
+.score-container {
+    display: flex;
+    /* flex-direction: column; */
+    /* height: 200 px; */
+    align-items: center;
+    justify-content: center;
+    font-family: 'Josefin Sans', sans-serif;
+    /* overflow: scroll; */
+}
