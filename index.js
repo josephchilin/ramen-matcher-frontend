@@ -4,9 +4,9 @@ const userUrl = 'http://localhost:3000/api/v1/users'
 const scoreUrl = 'http://localhost:3000/api/v1/scores'
 
 // CARD IMAGE ASSETS
-const cardBack = 'https://i.imgur.com/fi8sccM.png'
-const correctPair = 'https://i.imgur.com/qoRKqo9.png'
-const wrongPair = 'https://i.imgur.com/xobKCZ8.png'
+const cardBack = 'https://i.imgur.com/SIjWIog.png'
+const correctPair = 'https://i.imgur.com/BVfHpbD.png'
+const wrongPair = 'https://i.imgur.com/7X0qBn4.png'
 
 // FORM NODES
 const formInput = document.querySelector("#userForm > p:nth-child(2) > input[type=text]")
@@ -60,19 +60,19 @@ function guessIncrement(){
 // need to refactor into get fetch
 let ramenOne = {
     "name": "ichiran",
-    "imageUrl": "https://i.imgur.com/qEk4ZMF.png"
+    "imageUrl": "https://i.imgur.com/WJD7d6E.png"
   }
 let ramenTwo = {
     "name": "momosan",
-    "imageUrl": "https://i.imgur.com/hLkrgOR.png"
+    "imageUrl": "https://i.imgur.com/wkflNA5.png"
   }
 let ramenThree = {
     "name": "nakiryu",
-    "imageUrl": "https://i.imgur.com/ExKxm2t.png"
+    "imageUrl": "https://i.imgur.com/VqPUrQy.png"
   }
 let ramenFour = {
     "name": "tsuta",
-    "imageUrl": "https://i.imgur.com/azMJhCA.png"
+    "imageUrl": "https://i.imgur.com/xujYqVP.png"
   }
 
 const ramenArray = [ramenOne, ramenOne, ramenTwo, ramenTwo, ramenThree, ramenThree, ramenFour, ramenFour]

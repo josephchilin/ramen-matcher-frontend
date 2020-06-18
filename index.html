@@ -5,18 +5,22 @@
 <title>Ramen Matcher</title>
 <link rel="stylesheet" href="index.css">
 <style>
-    h1 {text-align: center; font-family: 'Josefin Sans', sans-serif;}
-    h3 {text-align: center; font-family: 'Josefin Sans', sans-serif;}
+    h1 {text-align: center; font-family: 'Josefin Sans', sans-serif; color: #E1440D;}
+    h2 {text-align: center; font-family: 'Josefin Sans', sans-serif; color: #E1440D;}
+    h3 {text-align: center; font-family: 'Josefin Sans', sans-serif; color: #E1440D;}
+    body {
+        background-color: #FFECC2;
+    }
 </style>
 </head>
 
 <body>
     <h1 id=gameName>Ramen Matcher</h1>
     <h3 id="statusBox">Welcome!</h3>
-    <h3 id="guessBox"></h3>
+    <h2 id="guessBox"></h2>
     
     <div class="name-form">
-        <form id="userForm">
+        <form id="userForm" style="text-align: center;">
             <p><label>Enter Your Name</label></p>
             <p><input type="text" name="name"></p>
             <input type="submit" value="Submit">
@@ -42,9 +46,9 @@
             </tr>
         </table>
     </div>
-    <h3 id="ramen-scores"></h3> 
+    <h2 id="ramen-scores"></h3> 
     <div class="score-container">   
-        <ul id="scoreList" style="list-style-type: none;">
+        <ul id="scoreList" style="list-style-type: none; color:#E1440D;">
         </ul>
     </div>
 
