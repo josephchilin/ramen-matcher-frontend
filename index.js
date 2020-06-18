@@ -44,64 +44,51 @@ let guessesNumber = 0
 let userName = "" //saved form name
 let currentUserId
 
-// need to refactor into get fetch
-
-// let ramenOne
-// let ramenTwo
-// let ramenThree
-// let ramenFour 
-
-
-// let ramenArray = [ramenOne, ramenOne, ramenTwo, ramenTwo, ramenThree, ramenThree, ramenFour, ramenFour]
-
+// SET IMAGES
 function setRamen(){
+    let ramenOne = {
+        "name": "ichiran",
+        "imageUrl": "https://i.imgur.com/WJD7d6E.png"
+    }
+    let ramenTwo = {
+        "name": "momosan",
+        "imageUrl": "https://i.imgur.com/wkflNA5.png"
+    }
+    let ramenThree = {
+        "name": "nakiryu",
+        "imageUrl": "https://i.imgur.com/VqPUrQy.png"
+    }
+    let ramenFour = {
+        "name": "tsuta",
+        "imageUrl": "https://i.imgur.com/xujYqVP.png"
+    }
 
-//  console.log(ramenArray)
+    let ramenArray = [ramenOne, ramenOne, ramenTwo, ramenTwo, ramenThree, ramenThree, ramenFour, ramenFour]
 
-let ramenOne = {
-    "name": "ichiran",
-    "imageUrl": "https://i.imgur.com/WJD7d6E.png"
-  }
-let ramenTwo = {
-    "name": "momosan",
-    "imageUrl": "https://i.imgur.com/wkflNA5.png"
-  }
-let ramenThree = {
-    "name": "nakiryu",
-    "imageUrl": "https://i.imgur.com/VqPUrQy.png"
-  }
-let ramenFour = {
-    "name": "tsuta",
-    "imageUrl": "https://i.imgur.com/xujYqVP.png"
-  }
-
-let ramenArray = [ramenOne, ramenOne, ramenTwo, ramenTwo, ramenThree, ramenThree, ramenFour, ramenFour]
-
-  generateBoard(ramenArray)
-
+    generateBoard(ramenArray)
 }
 
 function setBeef(){
-    ramenOne = {
+    let ramenOne = {
         "name": "bel-campo",
         "imageUrl": "https://i.imgur.com/qpaz4TR.png"
-      }
-    ramenTwo = {
+    }
+    let ramenTwo = {
         "name": "au-cheval",
         "imageUrl": "https://i.imgur.com/zbMtbng.png"
-      }
-    ramenThree = {
+    }
+    let ramenThree = {
         "name": "french-louie",
         "imageUrl": "https://i.imgur.com/wVuQgaB.png"
-      }
-    ramenFour = {
+    }
+    let ramenFour = {
         "name": "coopers-nyc",
         "imageUrl": "https://i.imgur.com/L5wyP5v.png"
-      }
+    }
 
-      let ramenArray = [ramenOne, ramenOne, ramenTwo, ramenTwo, ramenThree, ramenThree, ramenFour, ramenFour]
+    let ramenArray = [ramenOne, ramenOne, ramenTwo, ramenTwo, ramenThree, ramenThree, ramenFour, ramenFour]
 
-  generateBoard(ramenArray)
+    generateBoard(ramenArray)
 }
 
 // HELPER FUNCTIONS
@@ -139,47 +126,43 @@ function shuffle(array) {
     return array;
   }
 
-function generateBoard(ramenShuffledArray){
-// console.log(ramenShuffledArray)
-    shuffle(ramenShuffledArray)
-
+function generateBoard(array){
+    shuffle(array)
 // need to refactor into loop
     card1.src = cardBack
-    card1.dataset.ramen = ramenShuffledArray[0].name
-    card1.dataset.ramenurl = ramenShuffledArray[0].imageUrl
+    card1.dataset.ramen = array[0].name
+    card1.dataset.ramenurl = array[0].imageUrl
 
     card2.src = cardBack
-    card2.dataset.ramen = ramenShuffledArray[1].name
-    card2.dataset.ramenurl = ramenShuffledArray[1].imageUrl
+    card2.dataset.ramen = array[1].name
+    card2.dataset.ramenurl = array[1].imageUrl
 
     card3.src = cardBack
-    card3.dataset.ramen = ramenShuffledArray[2].name
-    card3.dataset.ramenurl = ramenShuffledArray[2].imageUrl
+    card3.dataset.ramen = array[2].name
+    card3.dataset.ramenurl = array[2].imageUrl
 
     card4.src = cardBack
-    card4.dataset.ramen = ramenShuffledArray[3].name
-    card4.dataset.ramenurl = ramenShuffledArray[3].imageUrl
+    card4.dataset.ramen = array[3].name
+    card4.dataset.ramenurl = array[3].imageUrl
 
     card5.src = cardBack
-    card5.dataset.ramen = ramenShuffledArray[4].name
-    card5.dataset.ramenurl = ramenShuffledArray[4].imageUrl
+    card5.dataset.ramen = array[4].name
+    card5.dataset.ramenurl = array[4].imageUrl
 
     card6.src = cardBack
-    card6.dataset.ramen = ramenShuffledArray[5].name
-    card6.dataset.ramenurl = ramenShuffledArray[5].imageUrl
+    card6.dataset.ramen = array[5].name
+    card6.dataset.ramenurl = array[5].imageUrl
 
     card7.src = cardBack
-    card7.dataset.ramen = ramenShuffledArray[6].name
-    card7.dataset.ramenurl = ramenShuffledArray[6].imageUrl
+    card7.dataset.ramen = array[6].name
+    card7.dataset.ramenurl = array[6].imageUrl
 
     card8.src = cardBack
-    card8.dataset.ramen = ramenShuffledArray[7].name
-    card8.dataset.ramenurl = ramenShuffledArray[7].imageUrl
+    card8.dataset.ramen = array[7].name
+    card8.dataset.ramenurl = array[7].imageUrl
 
     gamePairs = 4
 }
-
-
 
 function flipCards(savedNode, e){
     setTimeout(function(){
@@ -202,7 +185,6 @@ function saveUser(){
         })
     })
     // .then(getUsers())
-    
 }
 
 function createUserLi(userObject){
@@ -248,27 +230,24 @@ document.addEventListener('submit', function(e){
     e.preventDefault()
 
     if(formInput.value==='beef'){
-        gameName.innerHTML = 'THERE IS NO COW LEVEL'
         userName = formInput.value
+
+        gameName.innerHTML = 'THERE IS NO COW LEVEL'
         guessNode.innerHTML = "0 Moves"
         statusBox.innerHTML = `Hi ${userName}, try to find all the pairs of burgers in the fewest moves.`
         userForm.remove()
 
         setBeef()
-        // console.log(ramenOne)
-        // generateBoard()
-
     }
 
     else if(formInput.value){
-    userName = formInput.value
+        userName = formInput.value
 
-    guessNode.innerHTML = "0 Moves"
-    statusBox.innerHTML = `Hi ${userName}, try to find all the pairs of ramen in the fewest moves.`
-    userForm.remove()
+        guessNode.innerHTML = "0 Moves"
+        statusBox.innerHTML = `Hi ${userName}, try to find all the pairs of ramen in the fewest moves.`
+        userForm.remove()
 
-    setRamen()
-    // generateBoard()
+        setRamen()
     }
 })
 
