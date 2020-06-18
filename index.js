@@ -1,36 +1,25 @@
-// console.log("ramen game")
-
+// BASE URLS
 const noodleUrl = 'http://localhost:3000/api/v1/noodles'
 const userUrl = 'http://localhost:3000/api/v1/users'
 const scoreUrl = 'http://localhost:3000/api/v1/scores'
 
+// CARD IMAGE ASSETS
 const cardBack = 'https://i.imgur.com/fi8sccM.png'
 const correctPair = 'https://i.imgur.com/qoRKqo9.png'
 const wrongPair = 'https://i.imgur.com/xobKCZ8.png'
 
+// FORM NODES
 const formInput = document.querySelector("#userForm > p:nth-child(2) > input[type=text]")
 const statusBox = document.getElementById("statusBox")
 const userForm = document.getElementById("userForm")
 
+// CARD NODES
 const ramenCard = document.getElementsByClassName("ramen-card")
 const statusCard = document.getElementById("status")
 const ramenCell = document.getElementsByClassName("ramen-cell")
 const guessNode = document.getElementById("guessBox")
 
-let gamePairs = 0
-let currentPairs = 0
-let savedChoice = "" //save previous card name
-let savedNode //save previous card node
-let guessesNumber = 0
-let userName = "" //saved form name
-let currentUserId
-
-// console.log(correctPair)
-// √ need url constants for ramen/user/score
-// √ need constant for card back image
-
-// console.log(ramenCard[0])
-
+// INDIVIDUAL CARD NODES
 const card1 = ramenCard[0]
 const card2 = ramenCard[1]
 const card3 = ramenCard[2]
@@ -40,10 +29,18 @@ const card6 = ramenCard[5]
 const card7 = ramenCard[6]
 const card8 = ramenCard[7]
 
-function renderCard(card){
-    card.src = cardBack
-}
+// VARIABLES FOR SAVING STATE
+let gamePairs = 0
+let currentPairs = 0
+let savedChoice = "" //save previous card name
+let savedNode //save previous card node
+let guessesNumber = 0
+let userName = "" //saved form name
+let currentUserId
 
+
+
+// CARD PAIR STATUS FUNCTIONS
 function correct(){
     statusCard.src = correctPair
     gamePairs + 1
@@ -58,6 +55,7 @@ function guessIncrement(){
     guessNode.innerHTML = `${guessesNumber} Guesses`
 }
 
+// need to refactor into fetch
 let ramenOne = {
     "name": "ichiran",
     "imageUrl": "https://i.imgur.com/qEk4ZMF.png"
@@ -70,7 +68,6 @@ let ramenThree = {
     "name": "nakiryu",
     "imageUrl": "https://i.imgur.com/ExKxm2t.png"
   }
-
 let ramenFour = {
     "name": "tsuta",
     "imageUrl": "https://i.imgur.com/azMJhCA.png"
@@ -141,6 +138,9 @@ function generateBoard(){
     gamePairs = 4
 }
 
+// function renderCard(card){
+//     card.src = cardBack
+// }
 
 // ramenCard.foreach(renderCard(card))
 
@@ -173,7 +173,6 @@ function flipCards(savedNode, e){
 }
 
 function saveUser(){
-    console.log(`save user function with ${guessesNumber} guesses`)
     fetch(userUrl, {
         method: "POST",
         headers: {
@@ -184,11 +183,9 @@ function saveUser(){
                 name: userName,
                 guesses: guessesNumber
             })
-
     })
         .then(response => response.json())
         .then(console.log)
-
 
     // fetch post to scores
     // .then get all scores
@@ -197,9 +194,7 @@ function saveUser(){
 
 // need function if currentpairs === game pairs then game over
 function gameOver(){
-
     if (currentPairs === gamePairs){
-        console.log(`game over function with ${guessesNumber} guesses`)
         statusBox.innerHTML = `Congratulations ${userName}, you solved this with ${guessesNumber} guesses!`
         saveUser()
         //need function to show score list
@@ -207,7 +202,7 @@ function gameOver(){
 }
 
 document.addEventListener('click', function(e){
-//correct pair
+//CORRECT PAIR
 console.log(currentPairs)
     if(e.target.src === cardBack && e.target.dataset.ramen === savedChoice ) {
         e.target.src = e.target.dataset.ramenurl
@@ -223,7 +218,7 @@ console.log(currentPairs)
         correct() //correct middle card
 
         gameOver()
-//first flip
+//FIRST CARD FLIP
     } else if(e.target.src === cardBack && savedChoice === ""){
         e.target.src = e.target.dataset.ramenurl //flip
         savedChoice = e.target.dataset.ramen //save current ramen name
@@ -232,13 +227,12 @@ console.log(currentPairs)
 
         // console.log ('first card pair click')
 
-//wrong pair
+//WRONG PAIR
     } else if(e.target.src === cardBack){
         e.target.src = e.target.dataset.ramenurl //flip
-        
         // console.log('wrong pair click')
 
-        flipCards(savedNode, e)     // flip both cards back TK x seconds
+        flipCards(savedNode, e) // flip both cards back TK x seconds
 
         guessIncrement() // increment guesses by 1
 
@@ -247,9 +241,7 @@ console.log(currentPairs)
         savedNode = ""
 
         wrong() // wrong match card function
-
         }
-
 })
 
 
