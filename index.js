@@ -44,7 +44,7 @@ let guessesNumber = 0
 let userName = "" //saved form name
 let currentUserId
 
-// SET IMAGES
+// SET BOARD FUNCTIONS
 function setRamen(){
     let ramenOne = {
         "name": "ichiran",
@@ -91,22 +91,7 @@ function setBeef(){
     generateBoard(ramenArray)
 }
 
-// HELPER FUNCTIONS
-function correct(){
-    statusCard.src = correctPair
-    gamePairs + 1
-}
-
-function wrong(){
-    statusCard.src = wrongPair
-}
-
-function guessIncrement(){
-    guessesNumber = parseInt(guessNode.innerHTML) + 1
-    guessNode.innerHTML = `${guessesNumber} Moves`
-}
-
-// fisher-yates shuffle algorithm
+// FISHER-YATES SHUFFLE ALGORITHM
 function shuffle(array) {
     let currentIndex = array.length, temporaryValue, randomIndex;
   
@@ -164,12 +149,35 @@ function generateBoard(array){
     gamePairs = 4
 }
 
+// GAMEPLAY HELPER FUNCTIONS
+function correct(){
+    statusCard.src = correctPair
+    gamePairs + 1
+}
+
+function wrong(){
+    statusCard.src = wrongPair
+}
+
+function guessIncrement(){
+    guessesNumber = parseInt(guessNode.innerHTML) + 1
+    guessNode.innerHTML = `${guessesNumber} Moves`
+}
+
 function flipCards(savedNode, e){
     setTimeout(function(){
         e.target.src = cardBack
         savedNode.src = cardBack
     }, 1000)
 
+}
+
+function gameOver(){
+    if (currentPairs === gamePairs){
+        statusBox.innerHTML = `Congratulations ${userName}, you matched all the pairs in ${guessesNumber} moves!`
+        saveUser()
+        getUsers()
+    }
 }
 
 function saveUser(){
@@ -187,6 +195,7 @@ function saveUser(){
     // .then(getUsers())
 }
 
+// RENDER USER HELPER FUNCTIONS
 function createUserLi(userObject){
     const userLi = document.createElement('li')
     userLi.className = 'user-score'
@@ -218,14 +227,7 @@ function getUsers(){
     })
 }
 
-function gameOver(){
-    if (currentPairs === gamePairs){
-        statusBox.innerHTML = `Congratulations ${userName}, you matched all the ramen in ${guessesNumber} moves!`
-        saveUser()
-        getUsers()
-    }
-}
-
+// EVENT LISTENERS
 document.addEventListener('submit', function(e){
     e.preventDefault()
 
@@ -234,7 +236,7 @@ document.addEventListener('submit', function(e){
 
         gameName.innerHTML = 'THERE IS NO COW LEVEL'
         guessNode.innerHTML = "0 Moves"
-        statusBox.innerHTML = `Hi ${userName}, try to find all the pairs of burgers in the fewest moves.`
+        statusBox.innerHTML = `Hi ${userName}, try to find all the pairs of burgers in the fewest moooves.`
         userForm.remove()
 
         setBeef()
@@ -289,6 +291,8 @@ document.addEventListener('click', function(e){
         wrong() // wrong match card function
         }
 })
+
+// PSEUDOCODE ROADMAP
 
 // √ need name submit form 
     // √ submit field 
